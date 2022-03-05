@@ -1,22 +1,22 @@
 import java.util.*;
 
 public class Gugudan {
-	public static int inputDan() {
+	public static String inputDan() {
 		Scanner scanner = new Scanner(System.in);
-		int dan = scanner.nextInt();
+		String dan = scanner.nextLine();
+		scanner.close();
 		
 		return dan;
 	}
 	
-	public static int[] calc(int dan) {
-		int[] result = new int[dan];
-		for(int i = 2; i <= result.length; i++) {
+	public static void calc(int first, int second) {
+		int[] result = new int[second];
+		for(int i = 2; i <= first; i++) {
 			for(int j = 0; j < result.length; j++) {
 				result[j] = i * (j+1);
 			}
 			print(result);
 		}
-		return result;
 	}
 	
 	public static void print(int[] result) {
