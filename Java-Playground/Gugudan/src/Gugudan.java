@@ -14,11 +14,5 @@ public class Gugudan {
 		System.out.println("\n");
 	}
 	
-	public static void main(String[] args) {
-		for(int i = 2; i <= 9; i++) {
-			int[] result = calc(i);
-			System.out.print(i + "단: ");
-			print(result);
-		}
-	}
+	
 }
