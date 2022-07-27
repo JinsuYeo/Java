@@ -28,29 +28,18 @@ public class MemberDeleteServlet extends HttpServlet {
 		ResultSet rs = null;
 	try {
 		ServletContext sc = this.getServletContext();
-//		Class.forName(sc.getInitParameter("driver"));
-//		conn = DriverManager.getConnection(
-//					sc.getInitParameter("url"),
-//					sc.getInitParameter("username"),
-//					sc.getInitParameter("password")
-//				);
-//		conn = (Connection)sc.getAttribute("conn");
-//		MemberDao memberDao = new MemberDao();
+
 		MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
-//		memberDao.setConnection(conn);
 		
 		memberDao.delete(Integer.parseInt(request.getParameter("no")));
-//		stmt = conn.prepareStatement("DELETE FROM MEMBERS"
-//					+ " WHERE MNO=" + request.getParameter("no"));
-//		stmt.executeUpdate();
 
-		response.sendRedirect("list");
+//		response.sendRedirect("list");
+		request.setAttribute("viewUrl", "redirect:list.do");
 	} catch(Exception e) {
 		throw new ServletException(e);
 	} finally {
 		try {if(rs != null) rs.close();} catch(Exception e) {}
 		try {if(stmt != null) stmt.close();} catch(Exception e) {}
-//		try {if(conn != null) conn.close();} catch(Exception e) {}
 	}
 		
 	}

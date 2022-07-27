@@ -68,17 +68,18 @@ public class MemberListServlet extends HttpServlet {
 			
 			req.setAttribute("members", memberDao.selectList());
 			
-			res.setContentType("text/html; charset=UTF-8");
+			req.setAttribute("viewUrl", "/member/MemberList.jsp");
 			
-			RequestDispatcher rd = req.getRequestDispatcher(
-						"/member/MemberList.jsp");
+//			res.setContentType("text/html; charset=UTF-8");
 			
-			rd.include(req, res);
+//			RequestDispatcher rd = req.getRequestDispatcher(
+//						"/member/MemberList.jsp");
+//			rd.include(req, res);
 		} catch(Exception e) {
-//			throw new ServletException(e);
-			req.setAttribute("error", e);
-			RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
-			rd.forward(req, res);
+			throw new ServletException(e);
+//			req.setAttribute("error", e);
+//			RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
+//			rd.forward(req, res);
 		} finally {
 			try {if(rs != null) rs.close();} catch(Exception e) {}
 			try {if(stmt != null) stmt.close();} catch(Exception e) {}

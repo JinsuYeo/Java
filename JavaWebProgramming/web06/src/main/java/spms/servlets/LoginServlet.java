@@ -21,8 +21,9 @@ import spms.vo.Member;
 public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginForm.jsp");
-		rd.forward(request, response);
+//		RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginForm.jsp");
+//		rd.forward(request, response);
+		request.setAttribute("viewUrl", "/auth/LoginForm.jsp");
 	}
 
 	@Override
@@ -33,31 +34,21 @@ public class LoginServlet extends HttpServlet {
 		
 		try {
 			ServletContext sc = this.getServletContext();
-//			conn = (Connection)sc.getAttribute("conn");
-//			stmt = conn.prepareStatement(
-//					"SELECT MNAME,EMAIL FROM MEMBERS"
-//					+ " WHERE EMAIL=? AND PWD=?");
-//			stmt.setString(1, request.getParameter("email"));
-//			stmt.setString(2, request.getParameter("password"));
-//			
-//			rs = stmt.executeQuery();
-			
-//			MemberDao memberDao = new MemberDao();
+
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
-//			memberDao.setConnection(conn);
 			
 			Member member = memberDao.exist(request.getParameter("email"), request.getParameter("password"));
 			
-//			if(rs.next()) {
 			if(member != null) {
-//				Member member = new Member().setEmail(rs.getString("EMAIL"))
-//											.setName(rs.getString("MNAME"));
 				HttpSession session = request.getSession();
 				session.setAttribute("member", member);
-				response.sendRedirect("../member/list");
+//				response.sendRedirect("../member/list");
+				request.setAttribute("viewUrl", "redirect:../member/list.do");
 			} else {
-				RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginFail.jsp");
-				rd.forward(request, response);
+//				RequestDispatcher rd = request.getRequestDispatcher("/auth/LoginFail.jsp");
+//				rd.forward(request, response);
+				request.setAttribute("viewUrl", "redirect:LoginFail.jsp");
+
 			}
 			
 		} catch(Exception e) {
