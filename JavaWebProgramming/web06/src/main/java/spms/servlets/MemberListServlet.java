@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import spms.vo.Member;
-import spms.dao.MemberDao;
+import spms.dao.MySqlMemberDao;
 
 @SuppressWarnings("serial")
 @WebServlet("/member/list")
@@ -34,47 +34,11 @@ public class MemberListServlet extends HttpServlet {
 		
 		try {
 			ServletContext sc = this.getServletContext();
-//			Class.forName(sc.getInitParameter("driver"));
-//			conn = DriverManager.getConnection(
-//					sc.getInitParameter("url"),
-//					sc.getInitParameter("username"),
-//					sc.getInitParameter("password")
-//				);
-//			conn = (Connection)sc.getAttribute("conn");
-//			stmt = conn.createStatement();
-//			rs = stmt.executeQuery(
-//					"select MNO,MNAME,EMAIL,CRE_DATE" + 
-//					" from MEMBERS" + 
-//					" order by MNO ASC");
-//			
-//			res.setContentType("text/html; charset=UTF-8");
-//			ArrayList<Member> members = new ArrayList<>();
-//			
-//			while(rs.next()) {
-//				members.add(new Member()	
-//											.setNo(rs.getInt("MNO"))
-//											.setName(rs.getString("MNAME"))
-//											.setEmail(rs.getString("EMAIL"))
-//											.setCreatedDate(rs.getDate("CRE_DATE")));
-//			}
-			
-//			req.setAttribute("members", members);
-			
-//			conn = (Connection)sc.getAttribute("conn");
-			
-//			MemberDao memberDao = new MemberDao();
-			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
-//			memberDao.setConnection(conn);
+			MySqlMemberDao memberDao = (MySqlMemberDao)sc.getAttribute("memberDao");
 			
 			req.setAttribute("members", memberDao.selectList());
 			
 			req.setAttribute("viewUrl", "/member/MemberList.jsp");
-			
-//			res.setContentType("text/html; charset=UTF-8");
-			
-//			RequestDispatcher rd = req.getRequestDispatcher(
-//						"/member/MemberList.jsp");
-//			rd.include(req, res);
 		} catch(Exception e) {
 			throw new ServletException(e);
 //			req.setAttribute("error", e);

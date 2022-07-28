@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mysql.jdbc.Driver;
 
-import spms.dao.MemberDao;
+import spms.dao.MySqlMemberDao;
 import spms.vo.Member;
 
 @WebServlet("/member/add")
@@ -42,7 +42,7 @@ public class MemberAddServlet extends HttpServlet {
 //					.setName(request.getParameter("name"));
 			Member member = (Member)request.getAttribute("member");
 			
-			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
+			MySqlMemberDao memberDao = (MySqlMemberDao)sc.getAttribute("memberDao");
 			
 			memberDao.insert(member);
 		

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import spms.dao.MemberDao;
+import spms.dao.MySqlMemberDao;
 import spms.vo.Member;
 
 @WebServlet("/member/update")
@@ -30,7 +30,7 @@ public class MemberUpdateServlet extends HttpServlet {
 		
 		try {
 			ServletContext sc = this.getServletContext();
-			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
+			MySqlMemberDao memberDao = (MySqlMemberDao)sc.getAttribute("memberDao");
 			
 			request.setAttribute("member", memberDao.selectOne(Integer.parseInt(request.getParameter("no"))));
 
@@ -60,7 +60,7 @@ public class MemberUpdateServlet extends HttpServlet {
 //					.setNo(Integer.parseInt(request.getParameter("no")));
 			Member member = (Member)request.getAttribute("member");
 					
-			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
+			MySqlMemberDao memberDao = (MySqlMemberDao)sc.getAttribute("memberDao");
 			
 			memberDao.update(member);
 		
