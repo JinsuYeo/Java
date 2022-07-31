@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import spms.bind.DataBinding;
 import spms.bind.ServletRequestDataBinder;
+import spms.context.ApplicationContext;
 import spms.controls.Controller;
 import spms.controls.LogOutController;
 import spms.controls.LoginController;
@@ -20,6 +21,7 @@ import spms.controls.MemberAddController;
 import spms.controls.MemberDeleteController;
 import spms.controls.MemberListController;
 import spms.controls.MemberUpdateController;
+import spms.listeners.ContextLoaderListener;
 import spms.vo.Member;
 
 @WebServlet("*.do")
@@ -30,41 +32,19 @@ public class DispatcherServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		String servletPath = request.getServletPath();
 		try {
-			ServletContext sc = this.getServletContext();
+//			ServletContext sc = this.getServletContext();
+			ApplicationContext ctx = ContextLoaderListener.getApplicationContext();
 			
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("session", request.getSession());
 			
-			Controller pageController = (Controller)sc.getAttribute(servletPath);
+//			Controller pageController = (Controller)sc.getAttribute(servletPath);
+			Controller pageController = (Controller)ctx.getBean(servletPath);
 
-//			if("/member/add.do".equals(servletPath)) {
-//				if(request.getParameter("email") != null) {
-//					model.put("member", new Member()
-//							.setEmail(request.getParameter("email"))
-//							.setPassword(request.getParameter("password"))
-//							.setName(request.getParameter("name")));
-//				}
-//			} else if("/member/update.do".equals(servletPath)) {
-//				if(request.getParameter("email") != null) {
-//					model.put("member", new Member()
-//							.setNo(Integer.parseInt(request.getParameter("no")))
-//							.setEmail(request.getParameter("email"))
-//							.setName(request.getParameter("name")));
-//				} else {
-//					model.put("no", new Integer(request.getParameter("no")));
-//				}
-//			} else if("/member/delete.do".equals(servletPath)) {
-//				model.put("no", new Integer(request.getParameter("no")));
-//			} else if("/auth/login.do".equals(servletPath)) {
-//				if(request.getParameter("email") != null) {
-//					model.put("LoginInfo", new Member()
-//							.setEmail(request.getParameter("email"))
-//							.setPassword(request.getParameter("password")));					
-//				}
-//
-//			} else if("/auth/logout.do".equals(servletPath)) {
-//				pageController = new LogOutController();
-//			}
+			if(pageController == null) {
+				throw new Exception("요청한 페이지를 찾을 수 없습니다.");
+			}
+			
 			if(pageController instanceof DataBinding) {
 				prepareRequestData(request, model, (DataBinding)pageController);
 			}
@@ -72,7 +52,7 @@ public class DispatcherServlet extends HttpServlet {
 			String viewUrl = pageController.execute(model);
 			
 			for(String key : model.keySet()) {
-				sc.setAttribute(key, model.get(key));
+				request.setAttribute(key, model.get(key));
 			}
 			
 			if(viewUrl.startsWith("redirect:")) {

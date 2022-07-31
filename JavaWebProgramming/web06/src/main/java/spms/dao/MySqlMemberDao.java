@@ -49,8 +49,6 @@ public class MySqlMemberDao implements MemberDao {
 			
 			ArrayList<Member> members = new ArrayList<>();
 			
-			
-			
 			while(rs.next()) {
 				members.add(new Member()
 						.setNo(rs.getInt("MNO"))
