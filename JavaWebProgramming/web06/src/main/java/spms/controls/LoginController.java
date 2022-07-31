@@ -7,7 +7,9 @@ import javax.servlet.http.HttpSession;
 import spms.bind.DataBinding;
 import spms.dao.MySqlMemberDao;
 import spms.vo.Member;
+import spms.annotation.Component;
 
+@Component("/auth/login.do")
 public class LoginController implements Controller, DataBinding {
 	MySqlMemberDao memberDao;
 	

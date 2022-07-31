@@ -13,20 +13,12 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import spms.annotation.Component;
 import spms.util.DBConnectionPool;
 import spms.vo.Member;
 
+@Component("memberDao")
 public class MySqlMemberDao implements MemberDao {
-//	Connection connection;
-//	
-//	public void setConnection(Connection connection) {
-//		this.connection = connection;
-//	}
-//	DBConnectionPool connPool;
-//	
-//	public void setConnectionPool(DBConnectionPool connPool) {
-//		this.connPool = connPool;
-//	}
 	DataSource ds;
 	
 	public void setDataSource(DataSource ds) {
