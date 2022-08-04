@@ -3,6 +3,7 @@
 	contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +27,8 @@
 <tr> 
   <td>${project.no}</td>
   <td><a href='update.do?no=${project.no}'>${project.title}</a></td>
-  <td>${project.startDate}</td>
-  <td>${project.endDate}</td>
+  <td><fmt:formatDate value="${project.startDate}" pattern="yyyy-MM-dd"/></td>
+  <td><fmt:formatDate value="${project.endDate}" pattern="yyyy-MM-dd"/></td>
   <td>${project.state}</td>
   <td><a href='delete.do?no=${project.no}'>[삭제]</a></td>
 </tr>

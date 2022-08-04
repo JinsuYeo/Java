@@ -1,5 +1,6 @@
 package spms.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Project {
@@ -43,8 +44,9 @@ public class Project {
 		return startDate;
 	}
 	
-	public Project setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public Project setStartDate(String startDate) throws Exception {
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		this.startDate = sm.parse(startDate);
 		return this;
 	}
 	
@@ -52,8 +54,9 @@ public class Project {
 		return endDate;
 	}
 	
-	public Project setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public Project setEndDate(String endDate)throws Exception {
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		this.endDate = sm.parse(endDate);
 		return this;
 	}
 	
