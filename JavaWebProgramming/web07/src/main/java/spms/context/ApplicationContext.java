@@ -25,18 +25,18 @@ public class ApplicationContext {
 	  objTable.put(name, obj);
   }
   
-  public ApplicationContext(String propertiesPath) throws Exception {
-    Properties props = new Properties();
-    props.load(new FileReader(propertiesPath));
-    
-    prepareObjects(props);
-    prepareAnnotationObjects();
-    injectDependency();
-  }
+//  public ApplicationContext(String propertiesPath) throws Exception {
+//    Properties props = new Properties();
+//    props.load(new FileReader(propertiesPath));
+//    
+//    prepareObjects(props);
+//    prepareAnnotationObjects();
+//    injectDependency();
+//  }
   
-  private void prepareAnnotationObjects() 
+  public void prepareObjectsByAnnotation(String basePackage) 
       throws Exception{
-    Reflections reflector = new Reflections("");
+    Reflections reflector = new Reflections(basePackage);
     
     Set<Class<?>> list = reflector.getTypesAnnotatedWith(Component.class);
     String key = null;
@@ -46,7 +46,10 @@ public class ApplicationContext {
     }
   }
 
-  private void prepareObjects(Properties props) throws Exception {
+  public void prepareObjectsByProperties(String propertiesPath) throws Exception {
+	Properties props = new Properties();
+	props.load(new FileReader(propertiesPath));
+	  
     Context ctx = new InitialContext();
     String key = null;
     String value = null;
@@ -62,7 +65,7 @@ public class ApplicationContext {
     }
   }
   
-  private void injectDependency() throws Exception {
+  public void injectDependency() throws Exception {
     for (String key : objTable.keySet()) {
       if (!key.startsWith("jndi.")) {
         callSetter(objTable.get(key));

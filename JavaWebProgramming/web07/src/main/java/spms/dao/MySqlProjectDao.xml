@@ -22,7 +22,7 @@
   
   <insert id="insert" parameterType="project">
   	  insert into PROJECTS(PNAME,CONTENT,STA_DATE,END_DATE,STATE,CRE_DATE,TAGS)
-  	  values (#{title),#{content},#{startDate},#{endDate},#{createdDate},#{tags})
+	  values (#{title},#{content},#{startDate},${endDate},0,now(),#{tags})
   </insert>
   
   <select id="selectOne" parameterType="int" resultMap="projectResultMap">
@@ -42,8 +42,6 @@
       where PNO=#{no}
   </update>
   
-  <delete id="delete" parameterType="int">
-  	  delete from PROJECTS
-  	  where PNO=#{value}
-  </delete>
+  <delete id="delete" parameterType="int"></delete>
+  
 </mapper>
